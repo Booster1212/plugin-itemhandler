@@ -1,4 +1,3 @@
-import * as alt from 'alt-server';
 import * as Athena from '@AthenaServer/api';
 import path from 'path';
 import fs from 'fs';
@@ -6,19 +5,21 @@ import { allItemArray } from './allItems'; // Will be available after first serv
 
 let itemNames = [...allItemArray] as const;
 
-const currentPath = path.join(process.cwd(), '/src/core/plugins/ITemHandler/server/src/allItems.ts');
+const currentPath = path.join(process.cwd(), '/src/core/plugins/ItemHandler/server/src/allItems.ts');
 export class ItemHandler {
     static async loadItems() {
-        const allItems = await Athena.systems.inventory.factory.getBaseItemsAsync();
-
-        const itemNames = [];
-        for (const entry of allItems) {
-            itemNames.push(`'${entry.dbName}'`);
+        let existingContent = '';
+        if (fs.existsSync(currentPath)) {
+            existingContent = fs.readFileSync(currentPath, 'utf-8');
         }
 
-        const exportString = `export const allItemArray = [${itemNames.join(', ')}] as const;`;
+        const allItems = await Athena.systems.inventory.factory.getBaseItemsAsync();
+        const newItemNames = allItems.map((entry) => `'${entry.dbName}'`);
+        const newExportString = `export const allItemArray = [${newItemNames.join(', ')}] as const;`;
 
-        fs.writeFileSync(currentPath, exportString, 'utf-8');
+        if (existingContent !== newExportString) {
+            fs.writeFileSync(currentPath, newExportString, 'utf-8');
+        }
     }
 }
 
