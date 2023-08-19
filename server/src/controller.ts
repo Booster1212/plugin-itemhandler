@@ -16,7 +16,7 @@ export class ItemHandler {
             itemNames.push(`'${entry.dbName}'`);
         }
 
-        const exportString = `export const allItemArray = [${itemNames.join(', ')}];`;
+        const exportString = `export const allItemArray = [${itemNames.join(', ')}] as const;`;
 
         fs.writeFileSync(currentPath, exportString, 'utf-8');
     }
@@ -30,5 +30,3 @@ export const ITEM_NAMES: Record<ItemName, ItemName> = itemNames.reduce((obj, ite
 }, {} as Record<ItemName, ItemName>);
 
 export default ITEM_NAMES;
-
-alt.logError(`Knife: ${ITEM_NAMES.knife}`);
