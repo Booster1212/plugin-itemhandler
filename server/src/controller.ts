@@ -1,11 +1,11 @@
 import * as Athena from '@AthenaServer/api';
 import path from 'path';
 import fs from 'fs';
-import { allItemArray } from './allItems'; // Will be available after first server start.
+import { allItemArray } from './allItems';
 
-let itemNames = [...allItemArray] as const;
+const itemNames = [...allItemArray] as const;
 
-const currentPath = path.join(process.cwd(), '/src/core/plugins/ItemHandler/server/src/allItems.ts');
+const currentPath = path.join(process.cwd(), '/src/core/plugins/core-itemhandler/server/src/allItems.ts');
 export class ItemHandler {
     static async loadItems() {
         let existingContent = '';
