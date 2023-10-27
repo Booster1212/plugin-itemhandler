@@ -1,7 +1,7 @@
-import * as Athena from '@AthenaServer/api';
+import * as Athena from '@AthenaServer/api/index.js';
 import path from 'path';
 import fs from 'fs';
-import { allItemArray } from './allItems';
+import { allItemArray } from './allItems.js';
 
 const itemNames = [...allItemArray] as const;
 
